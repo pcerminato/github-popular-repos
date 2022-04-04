@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
 import {
   aWeekAgoDateISO,
   injectStars,
@@ -88,7 +87,7 @@ export default function Home({ data, languages }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps = async () => {
   const res = await fetch(
     `https://api.github.com/search/repositories?q=created:%3E${aWeekAgoDateISO()}&sort=stars&order=desc`
   );
