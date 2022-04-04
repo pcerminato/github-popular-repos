@@ -35,8 +35,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
-  min-width: 600px;
+  width: 800px;
   flex-direction: column;
 }
 
@@ -50,7 +49,6 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   width: 100%;
-  max-width: 800px;
   box-shadow: 0 4px 13px -3px rgb(0 0 0 / 10%);
 }
 
