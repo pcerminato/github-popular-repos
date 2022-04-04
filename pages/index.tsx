@@ -43,18 +43,17 @@ export default function Home({ data }) {
       <header>
         <h1 className="title">Trending repositories on GitHub</h1>
       </header>
+      <section className="options">
+        <label htmlFor="stared-only-check">
+          Only stared repos
+          <input
+            type="checkbox"
+            id="stared-only-check"
+            onClick={handleShowStaredClick}
+          />
+        </label>
+      </section>
       <main className="main">
-        <section className="description">
-          <label htmlFor="stared-only-check">
-            Only stared repos
-            <input
-              type="checkbox"
-              id="stared-only-check"
-              onClick={handleShowStaredClick}
-            />
-          </label>
-        </section>
-
         <section className="grid">
           {showStaredOnly ? (
             <ReposListPanel

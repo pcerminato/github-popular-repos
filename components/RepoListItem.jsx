@@ -11,11 +11,13 @@ export const RepoListItem = ({
       <a href={url} title="Open at github" target="_blank" rel="noreferrer">
         {name}
       </a>
+      <button onClick={onStarClick} className="star">
+        {isStared ? "Unstar" : "Star"}
+      </button>
     </h3>
     <p>{description ?? "(No available description)"}</p>
-    <p>
-      {stars} {isStared ? " +1 (yours)" : ""}
+    <p className="stars-info">
+      Stars {stars} {isStared ? " + yours" : ""}
     </p>
-    <button onClick={onStarClick}>{isStared ? "Unstar" : "Star"}</button>
   </div>
 );
