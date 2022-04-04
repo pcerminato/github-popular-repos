@@ -1,21 +1,21 @@
 export const RepoListItem = ({
   description,
-  html_url,
-  id,
+  url,
   name,
-  className,
+  onStarClick,
+  stars,
+  isStared,
 }) => (
-  <div className={className}>
-    <h2>
-      <a
-        href={html_url}
-        title="Open at github"
-        target="_blank"
-        rel="noreferrer"
-      >
+  <div className="card">
+    <h3>
+      <a href={url} title="Open at github" target="_blank" rel="noreferrer">
         {name}
       </a>
-    </h2>
+    </h3>
     <p>{description ?? "(No available description)"}</p>
+    <p>
+      {stars} {isStared ? " +1 (yours)" : ""}
+    </p>
+    <button onClick={onStarClick}>{isStared ? "Unstar" : "Star"}</button>
   </div>
 );
