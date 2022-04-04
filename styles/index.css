@@ -75,6 +75,12 @@ p.stars-info {
   font-size: 0.9rem;
 }
 
+select.languages {
+  padding: 10px;
+  margin: 10px;
+  font-size: 1rem;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

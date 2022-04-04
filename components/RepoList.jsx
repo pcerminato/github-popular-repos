@@ -10,5 +10,6 @@ export const RepoList = ({ list, onStarClick }) =>
       onStarClick={() => onStarClick(repo.id, repo.isStared ?? false)}
       stars={repo.stargazers_count}
       isStared={repo.isStared}
+      language={repo.language}
     />
   ));

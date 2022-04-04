@@ -2,6 +2,7 @@ export const RepoListItem = ({
   description,
   url,
   name,
+  language,
   onStarClick,
   stars,
   isStared,
@@ -16,6 +17,7 @@ export const RepoListItem = ({
       </button>
     </h3>
     <p>{description ?? "(No available description)"}</p>
+    <p>{language}</p>
     <p className="stars-info">
       Stars {stars} {isStared ? " + yours" : ""}
     </p>

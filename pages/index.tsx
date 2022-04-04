@@ -7,11 +7,15 @@ import {
   getStaredRepos,
 } from "../src/services/utils";
 import { ReposListPanel } from "../components/ReposListPanel";
+import { LanguageSelector } from "../components/LanguagSelector";
+import { StaredReposCheckbox } from "../components/StaredReposCheckbox";
 
-export default function Home({ data }) {
+export default function Home({ data, languages }) {
+  const [originalData, setOriginalData] = useState([]);
   const [reposList, setReposList] = useState([]);
   const [staredReposList, setStaredReposList] = useState([]);
   const [showStaredOnly, setShowStaredOnly] = useState(false);
+  const [language, setLanguage] = useState();
 
   const toggleStar = (repoId, isStared) => {
     const reposListWithStars = injectStars(reposList, [`${repoId}`], !isStared);
@@ -23,13 +27,29 @@ export default function Home({ data }) {
     setShowStaredOnly((value) => !value);
   };
 
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+  };
+
   // initial data setup
   useEffect(() => {
+    // merges the original dataset with the localStorage stared repos
     const staredReposList = getStaredRepos();
     const reposListWithStars = injectStars([...data.items], staredReposList);
 
     setReposList([...reposListWithStars]);
+    setOriginalData([...reposListWithStars]);
   }, [data.items]);
+
+  useEffect(() => {
+    if (language) {
+      const reposListByLang =
+        language === "all"
+          ? [...originalData]
+          : [...originalData].filter((repo) => repo.language === language);
+      setReposList([...reposListByLang]);
+    }
+  }, [language, originalData]);
 
   useEffect(() => {
     if (showStaredOnly) {
@@ -44,15 +64,14 @@ export default function Home({ data }) {
         <h1 className="title">Trending repositories on GitHub</h1>
       </header>
       <section className="options">
-        <label htmlFor="stared-only-check">
-          Only stared repos
-          <input
-            type="checkbox"
-            id="stared-only-check"
-            onClick={handleShowStaredClick}
-          />
-        </label>
+        <StaredReposCheckbox onShowStaredClick={handleShowStaredClick} />
+        <LanguageSelector
+          language={language}
+          languages={languages}
+          onLanguageChange={handleLanguageChange}
+        />
       </section>
+
       <main className="main">
         <section className="grid">
           {showStaredOnly ? (
@@ -75,7 +94,17 @@ export const getServerSideProps: GetServerSideProps = async () => {
   );
   const data = await res.json();
 
+  // makes a "distinct" list of all languages in the dataset
+  let languages = data?.items.reduce((list, repo) => {
+    if (repo.language !== null && !list.includes(repo.language)) {
+      list.push(repo.language);
+    }
+    return list;
+  }, []);
+
+  languages = languages.sort();
+
   return {
-    props: { data },
+    props: { data, languages },
   };
 };
